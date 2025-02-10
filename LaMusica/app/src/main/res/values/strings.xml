@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">La Musica</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <!-- Tabs -->
+    <string name="tab_album">Album</string>
+    <string name="tab_artist">Artist</string>
+    <string name="tab_song">Song</string>
+    <string name="tab_playlist">List</string>
+    <string name="tab_playqueue">Queue</string>
+
+    <string name="album_songs">%d songs</string>
+
+    <string name="artist_albums">%s albums</string>
+
+    <string name="album_year">Released %s,</string>
+
+    <string name="song_duration">Duration %s</string>
+
+    <!-- Option menu -->
+    <string name="menu_add_to_playlist">Add to playlist</string>
+    <string name="menu_add_to_playqueue">Add to playqueue</string>
+    <string name="menu_search">Search</string>
+
+    <!-- Bottom sheet player -->
+    <string name="bottomsheet_artist">Artist</string>
+    <string name="bottomsheet_song">Song</string>
+    <string name="bottomsheet_lyric_button">Lyric</string>
+
+
+    <!-- Settings screen -->
+    <string name="scan_for_music_files">Scan for music files</string>
+    <string name="select_scan_storage_title">Select storage to scan</string>
+    <string name="clear_scan_result_title">Clear scan result</string>
+    <string name="internal_storage">Internal</string>
+    <string name="external_storage">External</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

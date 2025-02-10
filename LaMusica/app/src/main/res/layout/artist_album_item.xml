@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/gray_300"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/albumImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/default_music2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/albumTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="[Album]"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/albumYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:text="@string/album_year"/>
+
+                <TextView
+                    android:id="@+id/albumSongs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:text="@string/album_songs"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/expandImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_expand_more"/>
+    </LinearLayout>
+
+    <!-- Track item when only 1 song in album -->
+    <LinearLayout
+        android:id="@+id/trackItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:background="@color/gray_200"
+        android:padding="4dp">
+
+<!--        <ImageView-->
+<!--            android:id="@+id/playIconImage"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="start"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:paddingEnd="20dp"-->
+<!--            android:paddingStart="10dp"-->
+<!--            android:visibility="invisible"-->
+<!--            android:src="@drawable/ic_play_circle"/>-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/songTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:maxWidth="250dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="[Song title]"/>
+
+            <TextView
+                android:id="@+id/albumGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:maxWidth="250dp"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:text="[Album group]"/>
+            <TextView
+                android:id="@+id/songPlayTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:text="[Song play time]"/>
+
+        </LinearLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/songPlayTime"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text="[Song play time]"/>-->
+
+        <ImageView
+            android:id="@+id/addToQueueIconImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_add_to_queue"/>
+
+    </LinearLayout>
+
+</LinearLayout>
