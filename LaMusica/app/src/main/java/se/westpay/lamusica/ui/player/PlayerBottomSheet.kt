@@ -111,7 +111,7 @@ class PlayerBottomSheet(layout: ConstraintLayout, private val _playerBottomSheet
             _lyricsButtonImageView = activity.findViewById<ImageView>(R.id.lyricsButton)
             if (!_lyricsButtonImageView.hasOnClickListeners()) {
                 _lyricsButtonImageView.setOnClickListener {
-                    val song = MusicPlayer.getCurrentSong()
+                    val song = MusicPlayer.getCurrentPlayingSong()
                     song?.let { songNotNull ->
                         CoroutineScope(Dispatchers.Default).launch {
                             try {

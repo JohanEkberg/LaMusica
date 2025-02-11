@@ -80,9 +80,43 @@ class MusicPlayerTest {
                 Log.e("playSongFromQueueTest", "Exception: ${e.message}")
                 assertTrue(false)
             }
+        }
+    }
 
-
-
+    @Test
+    fun skipSongTest() {
+        runBlocking {
+            try {
+                var songCounter: Int = 0
+                val context = InstrumentationRegistry.getInstrumentation().targetContext
+                var success = false
+                MusicPlayer.addSongChangeCallback { song ->
+                    Log.d("playSongFromQueueTest", "Song changed callback: ${song?.title} ${song?.artist}")
+                    if (song?.title?.contains("Title-0") == true && MusicPlayer.getCurrentPlayingSong() != null) {
+                        songCounter++
+                    } else if (song?.title?.contains("Title-1") == true) {
+                        songCounter++
+                    }
+                    Log.d("playSongFromQueueTest", "Counter = ${songCounter}")
+                    success = songCounter == 2
+                }
+                var uri: Uri = getRawResourceUri(context, R.raw.test_song)
+                MusicPlayer.addToPlayerQueue(createQueueItem(0, uri))
+                uri = getRawResourceUri(context, R.raw.test_song2)
+                MusicPlayer.addToPlayerQueue(createQueueItem(1, uri))
+                delay(2000)
+                MusicPlayer.play(context)
+                delay(3000)
+                MusicPlayer.skip(context)
+                MusicPlayer.play(context)
+                delay(3000)
+                MusicPlayer.pause()
+                MusicPlayer.stop()
+                assertTrue(success)
+            } catch (e: Exception) {
+                Log.e("playSongFromQueueTest", "Exception: ${e.message}")
+                assertTrue(false)
+            }
         }
     }
 }

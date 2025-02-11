@@ -15,8 +15,8 @@ object MusicPlayer : IMusicPlayer {
     private var _mediaPlayer: MediaPlayer? = null
     private val _handler = Handler(Looper.getMainLooper())
     private var _songQueue: SongQueue = SongQueue()
-    private lateinit var _songChangeCallback: (AudioFileMetaData?) -> Unit
-    private lateinit var _progressCallback: (Int) -> Unit
+    private var _songChangeCallback: ((AudioFileMetaData?) -> Unit)? = null
+    private var _progressCallback: ((Int) -> Unit)? = null
     private var _currentSong: AudioFileMetaData? = null
     private var _initDone = false
 
@@ -35,7 +35,7 @@ object MusicPlayer : IMusicPlayer {
         getMediaPlayerInstance()?.release()
         _mediaPlayer = null
         _currentSong = null
-        _songChangeCallback(null)
+        _songChangeCallback?.let { it(null) }
     }
 
     @Synchronized
@@ -55,14 +55,14 @@ object MusicPlayer : IMusicPlayer {
         return _songQueue.getQueueItems()
     }
 
-    override fun getCurrentSong()  = _currentSong
+    override fun getCurrentPlayingSong()  = _currentSong
 
     @Synchronized
     override fun addToPlayerQueue(song: AudioFileMetaData) {
         Log.d(TAG, "MusicPlayer addToPlayerQueue ${song.title}")
         // If queue is empty, we start by updating the UI
         if (_songQueue.isEmpty() && _currentSong == null) {
-            _songChangeCallback(song)
+            _songChangeCallback?.let { it(song) }
         }
         _songQueue.addQueueItem(song)
     }
@@ -95,7 +95,7 @@ object MusicPlayer : IMusicPlayer {
             getMediaPlayerInstance()?.setOnCompletionListener {
                 Log.i(TAG, "Song finished callback")
                 _currentSong = null
-                _progressCallback(100)
+                _progressCallback?.let { it(100) }
                 playSongFromQueue(context)
             }
         } catch(e: Exception) {
@@ -111,21 +111,18 @@ object MusicPlayer : IMusicPlayer {
                 Log.i(TAG, "New song to play: ${_currentSong?.artist} - ${_currentSong?.title}")
                 _currentSong?.songUri?.let { songNotNull ->
                     if (playSong(context, songNotNull)) {
-                        _songChangeCallback(_currentSong)
+                        _songChangeCallback?.let { it(_currentSong) }
                     }
                 }
             } else if (_currentSong != null) {
                 Log.i(TAG, "Queue is empty, play current song")
                 _currentSong?.songUri?.let { songNotNull ->
                     if (playSong(context, songNotNull)) {
-                        _songChangeCallback(_currentSong)
+                        _songChangeCallback?.let { it(_currentSong) }
                     }
                 }
             } else {
                 Log.w(TAG, "Queue is empty!")
-//                _songChangeCallback(null)
-//                _initDone = false
-//                getMediaPlayerInstance()?.release()
                 clearMediaPlayer()
             }
         } catch(e: Exception) {
@@ -172,9 +169,9 @@ object MusicPlayer : IMusicPlayer {
                 _currentSong = getItemFromQueue()
                 if (_currentSong == null && queueSize() == 0) {
                     Log.w(TAG, "Queue is empty!")
-                    _songChangeCallback(null)
+                    _songChangeCallback?.let { it(null) }
                 } else {
-                    _songChangeCallback(_currentSong)
+                    _songChangeCallback?.let { it(_currentSong) }
                 }
             }
         } catch (e: Exception) {
@@ -224,12 +221,12 @@ object MusicPlayer : IMusicPlayer {
                 val duration = getMediaPlayerInstance()?.duration?.toFloat() ?: 0F
                 val progress: Float = (currentPosition / duration) * 100
 
-                _progressCallback(progress.toInt())
+                _progressCallback?.let { it(progress.toInt()) }
                 if (progress < 100) {
                     _handler.postDelayed(this, 100)
                 }
             } else {
-                _progressCallback(0)
+                _progressCallback?.let { it(0) }
             }
         }
     }

@@ -10,7 +10,7 @@ interface IMusicPlayer {
     fun stop()
     fun addToPlayerQueue(song: AudioFileMetaData)
     fun removeFromPlayerQueue(song: AudioFileMetaData)
-    fun getCurrentSong() : AudioFileMetaData?
+    fun getCurrentPlayingSong() : AudioFileMetaData?
     fun getPlayerQueue() : List<AudioFileMetaData>
     fun addSongChangeCallback(songChangeCallback: (AudioFileMetaData?) -> Unit)
     fun addProgressCallback(progressCallback: (Int) -> Unit)
