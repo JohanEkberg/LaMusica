@@ -6,9 +6,11 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="option_menu_text_size">22sp</dimen>
-    <dimen name="settings_title_text_size">22sp</dimen>
+    <dimen name="settings_title_text_size">20sp</dimen>
     <dimen name="settings_switch_text_size">20sp</dimen>
 
-    <dimen name="button_margin_start_end">40dp</dimen>
     <dimen name="button_text_size">20sp</dimen>
+
+    <dimen name="settings_screen_start_and_end_margin">20sp</dimen>
+    <dimen name="settings_screen_top_margin">40sp</dimen>
 </resources>

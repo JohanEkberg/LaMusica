@@ -17,25 +17,18 @@ import se.westpay.lamusica.datalayer.AudioDataDatabaseAccess
 class SettingsViewModel : ViewModel() {
     private val _scanDone = MutableLiveData<Boolean>()
     val scanDone: LiveData<Boolean> = _scanDone
+    private val _artistAdded = MutableLiveData<String>()
+    val artistAdded: LiveData<String> = _artistAdded
 
     fun doScan(context: Context) {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val success = withContext(Dispatchers.IO) {
-//                Log.i(TAG, "Starting scan...")
-//                //AudioDataDatabaseAccess.clearAllTables(context)
-//                AudioDataDatabaseAccess.deleteAllDataInDatabase(context)
-//                val audioScanner = AudioScanner()
-//                audioScanner.scanAudioFiles(context)
-//            }
-//            Log.i(TAG, "Scan finished, success = $success")
-//            _scanDone.postValue(success)
-//        }
         viewModelScope.launch {
             val success = withContext(Dispatchers.IO) {
                 Log.i(TAG, "Starting scan...")
                 //AudioDataDatabaseAccess.clearAllTables(context)
                 if (AudioDataDatabaseAccess.deleteAllDataInDatabase(context)) {
-                    val audioScanner = AudioScanner()
+                    val audioScanner = AudioScanner() { it ->
+                        _artistAdded.postValue(it)
+                    }
                     audioScanner.scanAudioFiles(context)
                 } else {
                     false

@@ -12,9 +12,7 @@ import se.westpay.lamusica.datalayer.AudioDataDatabaseAccess
 import se.westpay.lamusica.repositories.AudioFileMetaData
 
 
-class AudioScanner {
-    //private val extension = arrayOf("mp3", "flac")
-
+class AudioScanner(private val artistDetectedCallback: ((artist: String) -> Unit)? = null) {
     private fun checkURIResource(resolver: ContentResolver, contentUri: Uri?): Boolean {
         val cursor: Cursor? = resolver.query(contentUri!!, null, null, null, null)
         val doesExist = cursor != null && cursor.moveToFirst()
@@ -189,11 +187,11 @@ class AudioScanner {
                 if (currentArtist == null) {
                     latestArtistId = AudioDataDatabaseAccess.storeArtistData(context, audioFileMetaData)
                     artistList.add(ArtistItem(value = artist, id = latestArtistId))
+                    artistDetectedCallback?.let { it((artist)) }
                 } else {
                     latestArtistId = currentArtist.id
                 }
 
-                //AudioDataDatabaseAccess.storeSongData(context, audioFileMetaData, latestAddedArtist.id, latestAddedAlbum.id)
                 AudioDataDatabaseAccess.storeSongData(
                     context,
                     audioFileMetaData,

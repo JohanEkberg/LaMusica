@@ -10,7 +10,6 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:text="@string/scan_for_music_files"
-       android:layout_marginTop="50dp"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toTopOf="parent"
@@ -18,15 +17,34 @@
 
    <ProgressBar
        android:id="@+id/busyProgressBar"
-       android:layout_width="120dp"
-       android:layout_height="120dp"
-       android:layout_marginBottom="100dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="40dp"
        android:indeterminate="true"
-       android:indeterminateDrawable="@drawable/progressbar_indeterminate"
-       android:indeterminateTint="@color/gray_500"
+       android:indeterminateDrawable="@drawable/progressbar_indeterminate_horizontal"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintBottom_toBottomOf="parent"/>
+       app:layout_constraintTop_toBottomOf="@id/scanButton"/>
 
+   <TextView
+      android:id="@+id/description"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="@string/artists_found"
+       style="@style/settings_description"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/busyProgressBar" />
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/logEntriesRecycleView"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:layout_marginBottom="30dp"
+       style="@style/settings_scan_log"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,7 +38,8 @@
 
 
     <!-- Settings screen -->
-    <string name="scan_for_music_files">Scan for music files</string>
+    <string name="scan_for_music_files">Scan for music</string>
+    <string name="artists_found">Artists found:</string>
     <string name="select_scan_storage_title">Select storage to scan</string>
     <string name="clear_scan_result_title">Clear scan result</string>
     <string name="internal_storage">Internal</string>
