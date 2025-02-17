@@ -1,11 +1,13 @@
 package se.westpay.lamusica.ui.settings
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import se.westpay.lamusica.R
+import se.westpay.lamusica.TAG
 
 class LogScanAdapter(private val logEntries: MutableList<String> = mutableListOf()) : RecyclerView.Adapter<LogScanAdapter.ViewHolder>() {
 
@@ -19,7 +21,11 @@ class LogScanAdapter(private val logEntries: MutableList<String> = mutableListOf
     }
 
     override fun onBindViewHolder(holder: LogScanAdapter.ViewHolder, position: Int) {
-        holder.logView.text = logEntries[position]
+        try {
+            holder.logView.text = logEntries[position]
+        } catch(e: Exception) {
+            Log.e(TAG, "Failed in onBindViewHolder, exception: ${e.message}")
+        }
     }
 
     override fun getItemCount(): Int {
@@ -28,15 +34,23 @@ class LogScanAdapter(private val logEntries: MutableList<String> = mutableListOf
 
     // Function to add an item dynamically
     fun addLogEntry(log: String) {
-        logEntries.add(log)
-        notifyItemInserted(logEntries.size - 1) // Notify RecyclerView about new item
+        try {
+            logEntries.add(log)
+            notifyItemInserted(logEntries.size - 1) // Notify RecyclerView about new item
+        } catch(e: Exception) {
+            Log.e(TAG, "Failed to add entry, exception: ${e.message}")
+        }
     }
 
     // Function to remove an item dynamically
     fun removeLogEntry(position: Int) {
-        if (position < logEntries.size) {
-            logEntries.removeAt(position)
-            notifyItemRemoved(position)
+        try {
+            if (position < logEntries.size) {
+                logEntries.removeAt(position)
+                notifyItemRemoved(position)
+            }
+        } catch(e: Exception) {
+            Log.e(TAG, "Failed to remove entry, exception: ${e.message}")
         }
     }
 }

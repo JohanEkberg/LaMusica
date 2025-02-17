@@ -19,6 +19,7 @@ import se.westpay.lamusica.R
 import se.westpay.lamusica.TAG
 import se.westpay.lamusica.audio.MusicPlayer
 import se.westpay.lamusica.lyricsservice.LyricsService
+import se.westpay.lamusica.lyricsservice.LyricsWithTimestamp
 import se.westpay.lamusica.ui.categoryalbum.AlbumFragment
 import se.westpay.lamusica.ui.categoryartist.ArtistFragment
 
@@ -29,8 +30,8 @@ class PlayerBottomSheet(layout: ConstraintLayout, private val _playerBottomSheet
     private lateinit var _playButtonImageView: ImageView
     private lateinit var _playNextButtonImageView: ImageView
     private lateinit var _lyricsButtonImageView: ImageView
-    private val _lyricsData = MutableLiveData<String>()
-    val lyricsData: LiveData<String> = _lyricsData
+    private val _lyricsData = MutableLiveData<LyricsWithTimestamp?>()
+    val lyricsData: LiveData<LyricsWithTimestamp?> = _lyricsData
 
     init {
         _bottomSheetBehavior.isHideable = true
@@ -115,7 +116,7 @@ class PlayerBottomSheet(layout: ConstraintLayout, private val _playerBottomSheet
                     song?.let { songNotNull ->
                         CoroutineScope(Dispatchers.Default).launch {
                             try {
-                                val lyrics = LyricsService.getLyrics(songNotNull.artist, songNotNull.title)
+                                val lyrics = LyricsService.getLyricsWithTimestamp(songNotNull.artist, songNotNull.title)
                                 _lyricsData.postValue(lyrics)
                             } catch(e: Exception) {
                                 Log.e(TAG, "Failed to show lyrics, exception: ${e.message}")

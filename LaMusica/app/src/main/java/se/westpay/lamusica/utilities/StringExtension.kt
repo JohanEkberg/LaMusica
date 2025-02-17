@@ -9,3 +9,4 @@ fun String.capitalized() : String {
         else it.toString()
     }
 }
+

@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -65,8 +66,12 @@ class MainActivity : AppCompatActivity(), IPlayerBottomSheet {
             _playerBottomSheet.setupListener()
 
             _playerBottomSheet.lyricsData.observe(this@MainActivity) { lyrics ->
-                if (lyrics.isNotEmpty()) {
-                    val bundle = bundleOf(LyricsFragment.ARG_PARAM_LYRICS to lyrics)
+                if (lyrics != null) {
+                    val bundle = bundleOf(
+                        LyricsFragment.ARG_PARAM_PLAIN_LYRICS to lyrics.plainLyrics,
+                        LyricsFragment.ARG_PARAM_SYNCED_LYRICS to lyrics.syncedLyrics,
+                        LyricsFragment.ARG_PARAM_DURATION to lyrics.duration
+                    )
                     loadFragment(LyricsFragment.FRAGMENT_NAME, bundle)
                 } else {
                     Toast.makeText(this@MainActivity,
@@ -244,6 +249,11 @@ class MainActivity : AppCompatActivity(), IPlayerBottomSheet {
         }
     }
 
+    private fun getCurrentFragment() : Fragment? {
+        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment)
+        return navHostFragment?.childFragmentManager?.fragments?.get(0)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -309,11 +319,6 @@ class MainActivity : AppCompatActivity(), IPlayerBottomSheet {
         Log.i(TAG, "onBackPressed")
     }
 
-    private fun getCurrentFragment() : Fragment? {
-        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment)
-        return navHostFragment?.childFragmentManager?.fragments?.get(0)
-    }
-
     private fun startApplication() {
         val startupFragment = getCurrentFragment() as StartupFragment
         startupFragment.startApplication()
@@ -363,6 +368,11 @@ class MainActivity : AppCompatActivity(), IPlayerBottomSheet {
             if (!MusicPlayer.isActive()) {
                 _bottomSheetBinding.progressBar.progress = 0
             } else {
+                getFirstVisibleFragment(listOf(LyricsFragment.FRAGMENT_NAME))?.let {
+                    if (it is LyricsFragment) {
+                        it.setLyricTimeSpan(progress)
+                    }
+                }
                 _bottomSheetBinding.progressBar.progress = progress
             }
         } catch (e: Exception) {

@@ -19,4 +19,13 @@ class LyricsApiTest {
             assertTrue(lyrics.isNotEmpty())
         }
     }
+
+    @Test
+    fun getLyricsWithTimestampTest() {
+        runBlocking {
+            val lyrics = LyricsService.getLyricsWithTimestamp("abba", "dancing queen")
+            Log.d("getLyricsWithTimestampTest", "${lyrics?.syncedLyrics} ${lyrics?.plainLyrics}  ${lyrics?.duration}")
+            assertTrue(lyrics?.syncedLyrics?.isNotEmpty() == true && lyrics.duration != 0)
+        }
+    }
 }
